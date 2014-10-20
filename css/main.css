@@ -1,0 +1,26 @@
+body {
+  background-color: #000000;
+  margin:0px;
+}
+
+#navbar {
+  height:100px;
+  background-color: #cccccc;
+  margin: 0;
+}
+
+#navbarTabs {
+  height:100px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mainTab {
+  background-color: #ffffff;
+  height:100px;
+}
+
+#content {
+  max-height: 90%;
+}
