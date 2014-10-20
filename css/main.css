@@ -1,3 +1,23 @@
+@font-face {
+  font-family: 'aileronLight';
+  src: url('fonts/Aileron-Light.otf');
+}
+
+@font-face {
+  font-family: 'aileronRegular';
+  src: url('fonts/Aileron-Regular.otf');
+}
+
+@font-face {
+  font-family: 'aileronThin';
+  src: url('fonts/Aileron-Thin.otf');
+}
+
+@font-face {
+  font-family: 'aileronUltraLight';
+  src: url('fonts/Aileron-UltraLight.otf');
+}
+
 html, body {
   background-color: #000000;
   margin: 0;
@@ -6,7 +26,7 @@ html, body {
 }
 
 #navbar {
-  height:10%;
+  height:5%;
   background-color: #cccccc;
 }
 
@@ -18,18 +38,59 @@ html, body {
 }
 
 .mainTab {
+  text-align: center;
+  vertical-align: middle;
+  font-family: 'aileronLight', sans-serif;
+  font-size:30px;
   margin-left:.4%;
   height:100%;
   float:left;
   background-color: #ffffff;
-  width:24.5%;
+  width:20%;
 }
 
-#lastTab {
+.mainTab:hover {
+  background-color:#000000;
+  color:#ffffff;
+}
+
+.mainTab:active {
+  background-color:#cccccc;
+}
+
+.songControl {
+  font-family: "Times New Roman";
+  width:5%;
+}
+
+#previousVisual {
+  width:5%;
+}
+
+#nextVisual {
+  width:5%;
+}
+
+#songInfo {
+  width:45%;
+}
+
+#pause {
+  font-size:25px;
+  font-family: 'aileronRegular';
+  vertical-align: middle;
+}
+
+#mainLogo{
+  height:100%;
+}
+
+#logo {
+  width:6.25%;
   margin-right:.4%;
 }
 
 #content {
   width:100%;
-  height: 90%;
+  height: 95%;
 }

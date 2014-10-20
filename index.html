@@ -5,17 +5,42 @@
   <title>clouded.</title>
   <link rel="stylesheet" href="css/main.css">
   <meta name="description" content="A Soundcloud visualizer.">
+  <script src="//connect.soundbutt.com/sdk.js"></script>
+  <script>
+    SC.initialize({
+      client_id: "9a8df71a44eec12588030ec880d4a32b",
+      redirect_uri: "http://localhost:8000/",
+    });
+  </script>
 </head>
 <body>
   <div id="navbar">
     <ul id="navbarTabs">
-      <li class="mainTab" id="shapesTab">
+      <li class="mainTab" id="titleTab">
+        clouded.
       </li>
-      <li class="mainTab" id="musicTab">
+      <li class="mainTab" id="previousVisual">
+        <
       </li>
-      <li class="mainTab" id="controller">
+      <li class="mainTab" id="nextVisual">
+        >
       </li>
-      <li class="mainTab" id="lastTab">
+      <li class="mainTab" id="songInfo">
+      </li>
+      <li class="mainTab songControl" id="rewind">
+        <<
+      </li>
+      <li class="mainTab songControl" id="play">
+        &#9654;
+      </li>
+      <li class="mainTab songControl" id="pause" style="display:none">
+        ||
+      </li>
+      <li class="mainTab songControl" id="forward">
+        >>
+      </li>
+      <li class="mainTab" id="logo">
+        <img id="mainLogo" src="images/powered.png" />
       </li>
     </ul>
   </div>
@@ -23,12 +48,5 @@
   </div>
 
   <script src="clouded/libs/jquery-1.11.1.min.js"></script>
-  <script src="clouded/libs/underscore-min.js"></script>
-  <script src="clouded/libs/backbone-min.js"></script>
-  <script src="clouded/models/user.js"></script>
-  <script src="clouded/models/song.js"></script>
-  <script src="clouded/collections/songlist.js"></script>
-  <script src="clouded/router.js"></script>
-  <script src="clouded/main.js"></script>
 </body>
 </html>
