@@ -20,7 +20,7 @@ var connectToSoundcloud = function() {
         $('#play').hide();
         $('#pause').show();
         changeDescription();
-        SC.stream('/tracks/' + likeIds[0].id, function(sound) {
+        SC.stream('/tracks/' + likeIds[0].id, {onfinish: goToNextSong}, function(sound) {
           var ctx = c.getContext("2d");
           ctx.fillStyle="#b4d455";
           ctx.fillRect(0,0,c.width, c.height)
@@ -76,7 +76,7 @@ $('#rewind').click(function() {
     $('#pause').show();
     currentDescription = likeIds[currentIndex].artist + " - \"" + likeIds[currentIndex].title + "\"";
     changeDescription();
-    SC.stream('/tracks/' + likeIds[currentIndex].id, function(sound) {
+    SC.stream('/tracks/' + likeIds[currentIndex].id, {onfinish: goToNextSong}, function(sound) {
       playing = true;
       currentSound = sound;
       sound.play();
@@ -95,10 +95,38 @@ $('#forward').click(function() {
     $('#pause').show();
     currentDescription = likeIds[currentIndex].artist + " - \"" + likeIds[currentIndex].title + "\"";
     changeDescription();
-    SC.stream('/tracks/' + likeIds[currentIndex].id, function(sound) {
+    SC.stream('/tracks/' + likeIds[currentIndex].id, {onfinish: goToNextSong}, function(sound) {
       playing = true;
       currentSound = sound;
       sound.play();
     });
   }
 });
+
+function goToNextSong() {
+  if (currentIndex !== likeIds.length - 1) {
+    currentIndex += 1;
+    currentDescription = likeIds[currentIndex].artist + " - \"" + likeIds[currentIndex].title + "\"";
+    changeDescription();
+    SC.stream('/tracks/' + likeIds[currentIndex].id, {onfinish: goToNextSong}, function(sound) {
+      playing = true;
+      currentSound = sound;
+      currentSound.onfinish = goToNextSong;
+      sound.play();
+    });
+  }
+}
+
+
+// var update = function() {
+
+// }
+
+// var draw = function() {
+
+// }
+
+// var gameLoop = function() {
+//   update();
+//   draw();
+// }
