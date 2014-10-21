@@ -1,32 +1,39 @@
+var randomColor = function() {
+  var chars = '0123456789abcdef'.split('');
+  var finalColor = '#';
+  for (var i = 0; i < 6; i++ ) {
+      finalColor += chars[Math.floor(Math.random() * 16)];
+  }
+  return finalColor;
+}
+
 var SquarePattern = (function() {
+
   function SquarePattern(speed, canvas) {
     this.squares = [];
     this.speed = speed;
     this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
     this.width = canvas.width;
     this.height = canvas.height;
 
-    var randomColor = function() {
-      var chars = '0123456789abcdef'.split('');
-      var finalColor = '#';
-      for (var i = 0; i < 6; i++ ) {
-          finalColor += chars[Math.floor(Math.random() * 16)];
-      }
-      return finalColor;
-    }
-
-    var posX = 0;
+    var i = 0;
+    var squareSide = canvas.height/4;
+    var subtractor = canvas.width % squareSide;
+    var total = canvas.width - subtractor;
+    var squareAmount = total/squareSide + 2;
+    var posX = 0 - squareSide;
     var posY = 0;
-    for (var i = 0; i < 25; i++) {
-      squareSide = canvas.height/5;
-      if ((i + 2) % 5 === 1) {
+    while (i < 5) {
+      var j = 0;
+      while (j < squareAmount) {
+        this.squares.push(new Square(this.canvas, this, randomColor(), posX, posY, squareSide));
         posX += squareSide;
-        posY = 0;
+        j += 1;
       }
-      else {
-        posY += squareSide;
-      }
-      this.squares.push(new Square(this.canvas, randomColor(), posX, posY, squareSide));
+      posX = 0;
+      posY += squareSide;
+      i += 1;
     }
   }
 
@@ -36,7 +43,21 @@ var SquarePattern = (function() {
     });
   }
 
-  SquarePattern.prototype.moveSquares = function() {
+  SquarePattern.prototype.scrollSquares = function() {
+    this.ctx.clearRect(0, 0, this.width, this.height);
+    this.squares.forEach(function(square) {
+      square.posX += 3;
+      if (square.posX >= this.width) {
+        square.destroy();
+      }
+    });
+    this.draw();
+  }
+
+  SquarePattern.prototype.changeColors = function() {
+    this.squares.forEach(function(square) {
+      square.changeColor(randomColor());
+    });
   }
 
   SquarePattern.prototype.animationLoop = function() {
@@ -48,8 +69,9 @@ var SquarePattern = (function() {
 })();
 
 var Square = (function() {
-  function Square(canvas, color, posX, posY, sideLength) {
+  function Square(canvas, parentPattern, color, posX, posY, sideLength) {
     this.canvas = canvas;
+    this.parentPattern = parentPattern;
     this.ctx = canvas.getContext('2d');
     this.color = color;
     this.posX = posX;
@@ -58,10 +80,18 @@ var Square = (function() {
   }
 
   Square.prototype.draw = function() {
-    console.log(this.canvas);
     this.ctx.fillStyle = this.color;
     this.ctx.fillRect(this.posX, this.posY, this.sideLength, this.sideLength);
-    this.ctx.translate(0.5, 0.5);
+  }
+
+  Square.prototype.destroy = function() {
+    this.parentPattern.squares.splice(this.parentPattern.squares.indexOf(this), 1);
+  }
+
+  Square.prototype.changeColor = function(color) {
+    this.color = color;
+    this.ctx.fillStyle = this.color;
+    this.ctx.fillRect(this.posX, this.posY, this.sideLength, this.sideLength);
   }
 
   return Square;

@@ -5,6 +5,17 @@ var currentIndex = 0;
 var currentSound = {};
 var currentDescription = '';
 var c = document.getElementById('visuals');
+c.width = $('#content').width();
+c.height = $('#content').height();
+var squarePattern = new SquarePattern(5, c);
+
+function changeColors() {
+  squarePattern.changeColors();
+}
+
+function scrolling() {
+  squarePattern.scrollSquares();
+}
 
 var connectToSoundcloud = function() {
   if (signedIn === false) {
@@ -21,8 +32,8 @@ var connectToSoundcloud = function() {
         $('#pause').show();
         changeDescription();
         SC.stream('/tracks/' + likeIds[0].id, {onfinish: goToNextSong}, function(sound) {
-          var cock = new SquarePattern(5, c);
-          cock.draw();
+          squarePattern.draw();
+          setInterval(scrolling, 1000/60);
           playing = true;
           currentSound = sound;
           sound.play();
@@ -76,6 +87,7 @@ $('#rewind').click(function() {
     currentDescription = likeIds[currentIndex].artist + " - \"" + likeIds[currentIndex].title + "\"";
     changeDescription();
     SC.stream('/tracks/' + likeIds[currentIndex].id, {onfinish: goToNextSong}, function(sound) {
+      squarePattern.changeColors();
       playing = true;
       currentSound = sound;
       sound.play();
@@ -95,6 +107,7 @@ $('#forward').click(function() {
     currentDescription = likeIds[currentIndex].artist + " - \"" + likeIds[currentIndex].title + "\"";
     changeDescription();
     SC.stream('/tracks/' + likeIds[currentIndex].id, {onfinish: goToNextSong}, function(sound) {
+      squarePattern.changeColors();
       playing = true;
       currentSound = sound;
       sound.play();
@@ -102,7 +115,7 @@ $('#forward').click(function() {
   }
 });
 
-function goToNextSong() {
+var goToNextSong = function() {
   if (currentIndex !== likeIds.length - 1) {
     currentIndex += 1;
     currentDescription = likeIds[currentIndex].artist + " - \"" + likeIds[currentIndex].title + "\"";
@@ -115,7 +128,6 @@ function goToNextSong() {
     });
   }
 }
-
 
 // var update = function() {
 
