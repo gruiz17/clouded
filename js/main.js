@@ -4,6 +4,7 @@ var playing = false;
 var currentIndex = 0;
 var currentSound = {};
 var currentDescription = '';
+var c = document.getElementById('visuals');
 
 var connectToSoundcloud = function() {
   if (signedIn === false) {
@@ -20,6 +21,9 @@ var connectToSoundcloud = function() {
         $('#pause').show();
         changeDescription();
         SC.stream('/tracks/' + likeIds[0].id, function(sound) {
+          var ctx = c.getContext("2d");
+          ctx.fillStyle="#b4d455";
+          ctx.fillRect(0,0,c.width, c.height)
           playing = true;
           currentSound = sound;
           sound.play();
@@ -68,8 +72,8 @@ $('#rewind').click(function() {
   else {
     currentSound.stop();
     currentIndex -= 1;
-    $('#play').show();
-    $('#pause').hide();
+    $('#play').hide();
+    $('#pause').show();
     currentDescription = likeIds[currentIndex].artist + " - \"" + likeIds[currentIndex].title + "\"";
     changeDescription();
     SC.stream('/tracks/' + likeIds[currentIndex].id, function(sound) {
@@ -87,8 +91,8 @@ $('#forward').click(function() {
   else {
     currentSound.stop();
     currentIndex += 1;
-    $('#play').show();
-    $('#pause').hide();
+    $('#play').hide();
+    $('#pause').show();
     currentDescription = likeIds[currentIndex].artist + " - \"" + likeIds[currentIndex].title + "\"";
     changeDescription();
     SC.stream('/tracks/' + likeIds[currentIndex].id, function(sound) {
