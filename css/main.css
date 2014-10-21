@@ -8,16 +8,6 @@
   src: url('fonts/Aileron-Regular.otf');
 }
 
-@font-face {
-  font-family: 'aileronThin';
-  src: url('fonts/Aileron-Thin.otf');
-}
-
-@font-face {
-  font-family: 'aileronUltraLight';
-  src: url('fonts/Aileron-UltraLight.otf');
-}
-
 html, body {
   background-color: #000000;
   margin: 0;

@@ -5,11 +5,11 @@
   <title>clouded.</title>
   <link rel="stylesheet" href="css/main.css">
   <meta name="description" content="A Soundcloud visualizer.">
-  <script src="//connect.soundbutt.com/sdk.js"></script>
+  <script src="//connect.soundcloud.com/sdk.js"></script>
   <script>
     SC.initialize({
       client_id: "9a8df71a44eec12588030ec880d4a32b",
-      redirect_uri: "http://localhost:8000/",
+      redirect_uri: "http://localhost:8000/callback.html"
     });
   </script>
 </head>
@@ -47,6 +47,7 @@
   <div id="content">
   </div>
 
-  <script src="clouded/libs/jquery-1.11.1.min.js"></script>
+  <script src="libs/jquery-1.11.1.min.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
