@@ -21,9 +21,8 @@ var connectToSoundcloud = function() {
         $('#pause').show();
         changeDescription();
         SC.stream('/tracks/' + likeIds[0].id, {onfinish: goToNextSong}, function(sound) {
-          var ctx = c.getContext("2d");
-          ctx.fillStyle="#b4d455";
-          ctx.fillRect(0,0,c.width, c.height)
+          var cock = new SquarePattern(5, c);
+          cock.draw();
           playing = true;
           currentSound = sound;
           sound.play();
