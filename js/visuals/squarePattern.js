@@ -31,24 +31,26 @@ var SquarePattern = (function() {
         posX += squareSide;
         j += 1;
       }
-      posX = 0;
+      posX = 0 - squareSide;;
       posY += squareSide;
       i += 1;
     }
   }
 
   SquarePattern.prototype.draw = function() {
+    this.ctx.clearRect(0, 0, this.width, this.height);
     this.squares.forEach(function(square) {
       square.draw();
     });
   }
 
   SquarePattern.prototype.scrollSquares = function() {
-    this.ctx.clearRect(0, 0, this.width, this.height);
+    $this = this;
     this.squares.forEach(function(square) {
       square.posX += 3;
-      if (square.posX >= this.width) {
-        square.destroy();
+      if (square.posX >= $this.width) {
+        square.changeColor(randomColor());
+        square.reloop();
       }
     });
     this.draw();
@@ -84,8 +86,8 @@ var Square = (function() {
     this.ctx.fillRect(this.posX, this.posY, this.sideLength, this.sideLength);
   }
 
-  Square.prototype.destroy = function() {
-    this.parentPattern.squares.splice(this.parentPattern.squares.indexOf(this), 1);
+  Square.prototype.reloop = function() {
+    this.posX = 0 - this.sideLength;
   }
 
   Square.prototype.changeColor = function(color) {
