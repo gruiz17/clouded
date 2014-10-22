@@ -2,6 +2,8 @@ var likeIds = [];
 var signedIn = false;
 var playing = false;
 var currentIndex = 0;
+var currentVisualIndex = 0;
+var currentVisualAmount = 2;
 var currentSound = {};
 var currentDescription = '';
 var c = document.getElementById('visuals');
@@ -9,12 +11,13 @@ c.width = $('#content').width();
 c.height = $('#content').height();
 var squarePattern = new SquarePattern(5, c);
 
-function changeColors() {
-  squarePattern.changeColors();
-}
+var currentInterval;
 
-function scrolling() {
-  squarePattern.scrollSquares();
+mapping = fnMap(squarePattern);
+
+var refreshVisual = function() {
+  clearInterval(currentInterval);
+  currentInterval = setInterval(mapping(currentVisualIndex)[0], 1000/mapping(currentVisualIndex)[1]);
 }
 
 var connectToSoundcloud = function() {
@@ -33,7 +36,8 @@ var connectToSoundcloud = function() {
         changeDescription();
         SC.stream('/tracks/' + likeIds[0].id, {onfinish: goToNextSong}, function(sound) {
           squarePattern.draw();
-          setInterval(scrolling, 1000/60);
+          currentInterval = setInterval(mapping(currentVisualIndex)[0], 1000/mapping(currentVisualIndex)[1]);
+          refreshVisual();
           playing = true;
           currentSound = sound;
           sound.play();
@@ -115,6 +119,22 @@ $('#forward').click(function() {
   }
 });
 
+$('#previousVisual').click(function() {
+  currentVisualIndex -= 1;
+  if (currentVisualIndex < 0) {
+    currentVisualIndex = currentVisualAmount - 1;
+  }
+  refreshVisual();
+});
+
+$('#nextVisual').click(function() {
+  currentVisualIndex += 1;
+  if (currentVisualIndex > currentVisualAmount - 1) {
+    currentVisualIndex = 0;
+  }
+  refreshVisual();
+});
+
 var goToNextSong = function() {
   if (currentIndex !== likeIds.length - 1) {
     currentIndex += 1;
@@ -128,16 +148,3 @@ var goToNextSong = function() {
     });
   }
 }
-
-// var update = function() {
-
-// }
-
-// var draw = function() {
-
-// }
-
-// var gameLoop = function() {
-//   update();
-//   draw();
-// }
