@@ -20,6 +20,7 @@ var SquarePattern = (function() {
     var i = 0;
     var squareSide = canvas.height/4;
     var subtractor = canvas.width % squareSide;
+    this.unfilledSpace = subtractor;
     var total = canvas.width - subtractor;
     var squareAmount = total/squareSide + 2;
     var posX = 0 - squareSide;
@@ -48,7 +49,7 @@ var SquarePattern = (function() {
     $this = this;
     this.squares.forEach(function(square) {
       square.posX += 3;
-      if (square.posX >= $this.width) {
+      if (square.posX >= $this.width + square.sideLength - $this.unfilledSpace) {
         square.changeColor(randomColor());
         square.reloop();
       }
